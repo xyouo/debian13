@@ -2,7 +2,7 @@ FROM debian:13
 
 LABEL org.opencontainers.image.source="https://github.com/vevc/debian"
 
-ENV TZ=Asia/Shanghai SSH_USER=debian SSH_PASSWORD=debian!23 CLOUDFLARE_TOKEN=""
+ENV TZ=Asia/Shanghai SSH_USER=debian SSH_PASSWORD=debian123 CLOUDFLARE_TOKEN=""
 
 COPY entrypoint.sh /entrypoint.sh
 COPY reboot.sh /usr/local/sbin/reboot
@@ -39,7 +39,7 @@ RUN apt-get clean && \
     chmod +x /entrypoint.sh && \
     chmod +x /usr/local/sbin/reboot && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo "$TZ" > /etc/timezone
+    echo $TZ > /etc/timezone
 
 EXPOSE 22
 
