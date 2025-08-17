@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write  # 在这里添加此行，授予写入软件包的权限
+      contents: read   # 为了 checkout 代码，通常也需要此权限
 
     steps:
     - name: Checkout repo
