@@ -1,5 +1,7 @@
 FROM debian:13
 
+LABEL org.opencontainers.image.source="https://github.com/vevc/debian"
+
 ENV TZ=Asia/Shanghai \
     SSH_USER=debian \
     SSH_PASSWORD=debian123 \
@@ -38,7 +40,7 @@ RUN set -xe \
     && chmod +x /entrypoint.sh \
     && chmod +x /usr/local/sbin/reboot \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && printf "%s" "$TZ" > /etc/timezone
+    && echo $TZ > /etc/timezone
 
 EXPOSE 22
 
