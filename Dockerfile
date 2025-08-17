@@ -2,7 +2,8 @@ FROM ubuntu:22.04
 
 ENV TZ=Asia/Shanghai \
     SSH_USER=ubuntu \
-    SSH_PASSWORD=ubuntu123
+    SSH_PASSWORD=ubuntu123 \
+    CLOUDFLARED_TOKEN=""
 
 COPY entrypoint.sh /entrypoint.sh
 COPY reboot.sh /usr/local/sbin/reboot
