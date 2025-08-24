@@ -23,10 +23,10 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} # 更改为 GITHUB_TOKEN
 
       - name: Set date-based tag
-        run: echo "DATE_TAG=$(date +'%y.%-m.%-d')" >> $GITHUB_ENV
+        run: echo "DATE_TAG=$(date +'%Y-%m-%d')" >> $GITHUB_ENV # 更改日期格式为更通用的格式
 
       - name: Build and push multi-arch image
         uses: docker/build-push-action@v5
