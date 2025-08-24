@@ -1,21 +1,24 @@
-FROM debian:bookworm-slim
+FROM debian:13
 
-# 安装必要软件：openssh-server, supervisor, 常用工具
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssh-server supervisor curl vim ca-certificates net-tools && \
-    rm -rf /var/lib/apt/lists/*
+ENV TZ=Asia/Shanghai \
+    SSH_USER=debian \
+    SSH_PASSWORD=123123
 
-# SSH 必需目录
-RUN mkdir /var/run/sshd && mkdir -p /var/log/supervisor
+COPY entrypoint.sh /entrypoint.sh
+COPY reboot.sh /usr/local/sbin/reboot
 
-# 拷贝配置和脚本
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update; \
+    apt-get install -y tzdata openssh-server sudo curl ca-certificates wget vim net-tools supervisor cron unzip iputils-ping telnet git iproute2 --no-install-recommends; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*; \
+    mkdir /var/run/sshd; \
+    chmod +x /entrypoint.sh; \
+    chmod +x /usr/local/sbin/reboot; \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime; \
+    echo $TZ > /etc/timezone
 
-RUN chmod +x /docker-entrypoint.sh
+EXPOSE 22
 
-# 暴露端口：22 SSH, 80 预留
-EXPOSE 22 80
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/usr/bin/supervisord", "-n"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/sbin/sshd", "-D"]
