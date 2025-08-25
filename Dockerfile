@@ -28,7 +28,8 @@ RUN DEBIAN_FRONTEND=noninteractive; \
         iputils-ping \
         git \
         iproute2 \
-        python3-pip; \
+        python3-pip
+	python3.13-venv; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*; \
     mkdir -p /var/run/sshd; \
