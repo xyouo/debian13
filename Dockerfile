@@ -29,8 +29,9 @@ RUN apt-get update && \
         telnet \
         git \
         iproute2 \
-        python3.13 \
-        python3.13-venv \
+        # !!! 使用 Debian 13 的默认 Python 版本 !!!
+        python3.11 \
+        python3.11-venv \
         python3-pip \
         python3-wheel \
         --no-install-recommends && \
