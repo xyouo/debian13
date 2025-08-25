@@ -10,8 +10,8 @@ ENV TZ=Asia/Shanghai \
 COPY entrypoint.sh /entrypoint.sh
 COPY reboot.sh /usr/local/sbin/reboot
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive; \
+    apt-get update && apt-get install -y --no-install-recommends \
         locales \
         fonts-wqy-zenhei \
         tzdata \
@@ -26,27 +26,18 @@ RUN apt-get update && \
         cron \
         unzip \
         iputils-ping \
-        telnet \
         git \
         iproute2 \
-        # !!! 使用 Debian 13 的默认 Python 版本 !!!
-        python3.11 \
-        python3.11-venv \
-        python3-pip \
-        python3-wheel \
-        --no-install-recommends && \
-    echo "zh_CN.UTF-8 UTF-8" >> /etc/locale.gen && \
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
-    locale-gen && \
-    update-locale LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 LC_CTYPE=zh_CN.UTF-8 && \
-    chmod 644 /etc/locale.gen && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    mkdir /var/run/sshd && \
-    chmod +x /entrypoint.sh && \
-    chmod +x /usr/local/sbin/reboot && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*;
+        python3-pip; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*; \
+    mkdir -p /var/run/sshd; \
+    chmod +x /entrypoint.sh /usr/local/sbin/reboot; \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime; \
+    echo $TZ > /etc/timezone; \
+    echo "zh_CN.UTF-8 UTF-8" >> /etc/locale.gen; \
+    locale-gen; \
+    /usr/sbin/update-locale LANG=zh_CN.UTF-8
 
 EXPOSE ${SSH_PORT}
 
