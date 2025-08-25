@@ -42,6 +42,8 @@ RUN apt-get update && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     mkdir /var/run/sshd && \
+    chmod +x /entrypoint.sh && \
+    chmod +x /usr/local/sbin/reboot && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*;
 
