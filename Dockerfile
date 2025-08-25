@@ -11,7 +11,27 @@ COPY reboot.sh /usr/local/sbin/reboot
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
-    apt-get install -y locales fonts-wqy-zenhei tzdata openssh-server sudo curl ca-certificates wget vim net-tools supervisor cron unzip iputils-ping telnet git iproute2 python3-pip --no-install-recommends; \
+    apt-get install -y \
+    locales \
+    fonts-wqy-zenhei \
+    tzdata \
+    openssh-server \
+    sudo \
+    curl \
+    ca-certificates \
+    wget \
+    vim \
+    net-tools \
+    supervisor \
+    cron \
+    unzip \
+    iputils-ping \
+    telnet \
+    git \
+    iproute2 \
+    python3-pip \
+    python3.13-venv \
+    --no-install-recommends; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*; \
     mkdir /var/run/sshd; \
