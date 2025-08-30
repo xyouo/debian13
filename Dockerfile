@@ -81,13 +81,6 @@ RUN DEBIAN_FRONTEND=noninteractive; \
     locale-gen; \
     /usr/sbin/update-locale LANG=zh_CN.UTF-8
 
-RUN mkdir -p /home/${SSH_USER}/app && \
-    git clone https://github.com/cmliu/webssh /home/${SSH_USER}/app/webssh && \
-    python3 -m venv /opt/venv/webssh && \
-    /opt/venv/webssh/bin/pip install -r /home/${SSH_USER}/app/webssh/requirements.txt && \
-    chmod +x /home/${SSH_USER}/app/webssh/run.py && \
-    chown -R ${SSH_USER}:${SSH_USER} /home/${SSH_USER}/app
-
 EXPOSE ${SSH_PORT}
 
 ENTRYPOINT ["/entrypoint.sh"]
