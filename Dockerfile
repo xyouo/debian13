@@ -12,24 +12,28 @@ COPY reboot.sh /usr/local/sbin/reboot
 
 RUN DEBIAN_FRONTEND=noninteractive; \
     apt-get update && apt-get install -y --no-install-recommends \
-        locales \
-        fonts-wqy-zenhei \
-        tzdata \
-        openssh-server \
-        sudo \
-        curl \
-        ca-certificates \
-        wget \
-        vim \
-        net-tools \
-        supervisor \
-        cron \
-        unzip \
-        iputils-ping \
-        git \
-        iproute2 \
-        python3-pip \
-        python3.13-venv; \
+    locales \
+    fonts-wqy-zenhei \
+    tzdata \
+    openssh-server \
+    sudo \
+    curl \
+    ca-certificates \
+    wget \
+    nano \
+    vim \
+    net-tools \
+    supervisor \
+    cron \
+    unzip \
+    tar \
+    zip \
+    jq \
+    iputils-ping \
+    git \
+    iproute2 \
+    python3-pip \
+    python3.13-venv; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*; \
     mkdir -p /var/run/sshd; \
