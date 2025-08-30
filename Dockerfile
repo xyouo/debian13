@@ -22,12 +22,11 @@ RUN curl -L --output ttyd https://github.com/tsl0922/ttyd/releases/latest/downlo
     chmod +x ttyd
 
 # 下载并处理 xray 文件
-RUN mkdir -p /app/tmp /app/xray && \
+RUN mkdir -p /app/tmp && \
     curl -L --output /app/tmp/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && \
     unzip /app/tmp/xray.zip -d /app/tmp && \
-    mv /app/tmp/xray /app/tmp/geosite.dat /app/tmp/geoip.dat /app/xray/ && \
-    echo "{}" > /app/xray/config.json && \
-    chmod +x /app/xray/xray && \
+    chmod +x /app/tmp/xray && \
+    mv /app/tmp/xray /app/ && \
     rm -rf /app/tmp
 
 
@@ -42,7 +41,7 @@ ENV TZ=Asia/Shanghai \
 
 COPY --from=builder /app/cloudflared /usr/local/bin/cloudflared
 COPY --from=builder /app/ttyd /usr/local/bin/ttyd
-COPY --from=builder /app/xray/ /usr/local/bin/xray/
+COPY --from=builder /app/xray /usr/local/bin/xray
 
 COPY entrypoint.sh /entrypoint.sh
 COPY reboot.sh /usr/local/sbin/reboot
